@@ -1,12 +1,9 @@
 package com.previewlibrary.loader;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.Parcelable;
-import android.preference.Preference;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.widget.ImageView;
 
 /**

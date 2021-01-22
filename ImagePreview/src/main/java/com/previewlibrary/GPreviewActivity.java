@@ -3,20 +3,17 @@ package com.previewlibrary;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.CallSuper;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.previewlibrary.enitity.IThumbViewInfo;
-import com.previewlibrary.loader.VideoClickListener;
+import com.previewlibrary.enitity.ThumbViewInfo;
 import com.previewlibrary.view.BasePhotoFragment;
 import com.previewlibrary.wight.BezierBannerView;
 import com.previewlibrary.wight.PhotoViewPager;
@@ -34,7 +31,7 @@ public class GPreviewActivity extends FragmentActivity {
     private static final String TAG = GPreviewActivity.class.getName();
     private boolean isTransformOut = false;
     /*** 图片的地址***/
-    private List<IThumbViewInfo> imgUrls;
+    private List<ThumbViewInfo> imgUrls;
     /*** 当前图片的位置 ***/
     private int currentIndex;
     /*** 图片的展示的Fragment***/
@@ -115,7 +112,7 @@ public class GPreviewActivity extends FragmentActivity {
      * @param currentIndex 选中索引
      * @param className    显示Fragment
      **/
-    protected void iniFragment(List<IThumbViewInfo> imgUrls, int currentIndex, Class<? extends BasePhotoFragment> className) {
+    protected void iniFragment(List<ThumbViewInfo> imgUrls, int currentIndex, Class<? extends BasePhotoFragment> className) {
         if (imgUrls != null) {
             int size = imgUrls.size();
             for (int i = 0; i < size; i++) {

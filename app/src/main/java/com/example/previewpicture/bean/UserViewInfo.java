@@ -2,9 +2,9 @@ package com.example.previewpicture.bean;
 
 import android.graphics.Rect;
 import android.os.Parcel;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-import com.previewlibrary.enitity.IThumbViewInfo;
+import com.previewlibrary.enitity.ThumbViewInfo;
 
 /**
  *
@@ -13,7 +13,7 @@ import com.previewlibrary.enitity.IThumbViewInfo;
  * E-Mail:yangchaojiang@outlook.com
  * Deprecated: 图片预览实体类
  **/
-public class UserViewInfo implements IThumbViewInfo {
+public class UserViewInfo implements ThumbViewInfo {
 
     private String url;  //图片地址
     private Rect mBounds; // 记录坐标
@@ -40,6 +40,7 @@ public class UserViewInfo implements IThumbViewInfo {
         return url;
     }
 
+    @Override
     public void setUrl(String url) {
         this.url = url;
     }
@@ -55,10 +56,12 @@ public class UserViewInfo implements IThumbViewInfo {
         return videoUrl;
     }
 
+    @Override
     public void setBounds(Rect bounds) {
         mBounds = bounds;
     }
 
+    @Override
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }

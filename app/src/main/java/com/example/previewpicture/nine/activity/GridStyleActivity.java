@@ -1,9 +1,9 @@
 package com.example.previewpicture.nine.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 import com.example.previewpicture.ImageUrlConfig;
@@ -13,7 +13,6 @@ import com.example.previewpicture.nine.adapter.PostAdapter;
 import com.example.previewpicture.nine.entity.Post;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 

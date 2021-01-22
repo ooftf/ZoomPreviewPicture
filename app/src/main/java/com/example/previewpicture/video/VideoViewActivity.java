@@ -1,15 +1,13 @@
 package com.example.previewpicture.video;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.previewpicture.ImageUrlConfig;
@@ -17,12 +15,11 @@ import com.example.previewpicture.R;
 import com.example.previewpicture.bean.UserViewInfo;
 import com.example.previewpicture.custom.UserFragment;
 import com.previewlibrary.GPreviewBuilder;
-import com.previewlibrary.loader.VideoClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoViewActivity extends Activity {
+public class VideoViewActivity extends AppCompatActivity {
     private ArrayList<UserViewInfo> mThumbViewInfoList = new ArrayList<>();
     private GridLayoutManager mGridLayoutManager;
     private RecyclerView mRecyclerView;

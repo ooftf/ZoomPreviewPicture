@@ -1,11 +1,14 @@
 package com.example.previewpicture.rec;
-import android.app.Activity;
+
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.previewpicture.ImageUrlConfig;
 import com.example.previewpicture.R;
@@ -15,7 +18,7 @@ import com.previewlibrary.GPreviewBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleViewActivity extends Activity {
+public class RecycleViewActivity extends AppCompatActivity {
     private ArrayList<UserViewInfo> mThumbViewInfoList = new ArrayList<>();
     private GridLayoutManager mGridLayoutManager;
     private RecyclerView mRecyclerView;

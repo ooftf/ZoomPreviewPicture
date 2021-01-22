@@ -3,10 +3,10 @@ package com.previewlibrary.view;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
+import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,7 @@ import com.previewlibrary.GPVideoPlayerActivity;
 import com.previewlibrary.GPreviewActivity;
 import com.previewlibrary.R;
 import com.previewlibrary.ZoomMediaLoader;
-import com.previewlibrary.enitity.IThumbViewInfo;
+import com.previewlibrary.enitity.ThumbViewInfo;
 import com.previewlibrary.loader.MySimpleTarget;
 import com.previewlibrary.loader.VideoClickListener;
 import com.previewlibrary.wight.SmoothImageView;
@@ -39,7 +39,7 @@ public class BasePhotoFragment extends Fragment {
     private static final String KEY_PATH = "key_item";
     private static final String KEY_DRAG = "isDrag";
     private static final String KEY_SEN = "sensitivity";
-    private IThumbViewInfo beanViewInfo;
+    private ThumbViewInfo beanViewInfo;
     private boolean isTransPhoto = false;
     protected SmoothImageView imageView;
     protected View rootView;
@@ -47,8 +47,9 @@ public class BasePhotoFragment extends Fragment {
     protected MySimpleTarget mySimpleTarget;
     protected View btnVideo;
     public static VideoClickListener listener;
+
     public static BasePhotoFragment getInstance(Class<? extends BasePhotoFragment> fragmentClass,
-                                                IThumbViewInfo item,
+                                                ThumbViewInfo item,
                                                 boolean currentIndex,
                                                 boolean isSingleFling,
                                                 boolean isDrag,
@@ -68,6 +69,7 @@ public class BasePhotoFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -267,6 +269,9 @@ public class BasePhotoFragment extends Fragment {
     }
 
     public void transformIn() {
+        if (imageView == null) {
+            return;
+        }
         imageView.transformIn(new SmoothImageView.onTransformListener() {
             @Override
             public void onTransformCompleted(SmoothImageView.Status status) {
@@ -285,7 +290,7 @@ public class BasePhotoFragment extends Fragment {
         rootView.setBackgroundColor(color);
     }
 
-    public IThumbViewInfo getBeanViewInfo() {
+    public ThumbViewInfo getBeanViewInfo() {
         return beanViewInfo;
     }
 }

@@ -27,5 +27,5 @@
         android:layout_centerInParent="true"
         android:visibility="gone"
         android:alpha="0"
-        android:src="@drawable/ic_video" />
+        app:srcCompat="@drawable/ic_video" />
 </RelativeLayout>

@@ -1,7 +1,7 @@
 package com.example.previewpicture.list;
 
 import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.example.previewpicture.ImageUrlConfig;
 import com.example.previewpicture.R;
 import com.example.previewpicture.bean.UserViewInfo;
-import com.example.previewpicture.custom.UserFragment;
 import com.previewlibrary.GPreviewBuilder;
 
 import java.util.ArrayList;

@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 
-import com.previewlibrary.enitity.IThumbViewInfo;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.previewlibrary.enitity.ThumbViewInfo;
 import com.previewlibrary.loader.VideoClickListener;
 import com.previewlibrary.view.BasePhotoFragment;
 
@@ -77,7 +78,7 @@ public final class GPreviewBuilder {
      *@param   <T>    你的实体类类型
      * @return GPreviewBuilder
      * **/
-    public <T extends IThumbViewInfo> GPreviewBuilder setData(@NonNull List<T> imgUrls) {
+    public <T extends ThumbViewInfo> GPreviewBuilder setData(@NonNull List<T> imgUrls) {
         intent.putParcelableArrayListExtra("imagePaths", new ArrayList<Parcelable>(imgUrls));
         return this;
     }
@@ -88,7 +89,7 @@ public final class GPreviewBuilder {
      *@param   <E>    你的实体类类型
      * @return GPreviewBuilder
      * **/
-    public <E extends IThumbViewInfo> GPreviewBuilder setSingleData(@NonNull E imgUrl) {
+    public <E extends ThumbViewInfo> GPreviewBuilder setSingleData(@NonNull E imgUrl) {
         ArrayList arrayList = new ArrayList<Parcelable>();
         arrayList.add(imgUrl);
         intent.putParcelableArrayListExtra("imagePaths", arrayList);

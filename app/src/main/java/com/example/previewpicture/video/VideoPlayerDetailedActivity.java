@@ -1,19 +1,18 @@
 package com.example.previewpicture.video;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.example.previewpicture.R;
 
 import chuangyuan.ycj.videolibrary.video.ExoUserPlayer;
 import chuangyuan.ycj.videolibrary.widget.VideoPlayerView;
 
-public class VideoPlayerDetailedActivity extends Activity {
+public class VideoPlayerDetailedActivity extends AppCompatActivity {
 
     private ExoUserPlayer exoPlayerManager;
     private VideoPlayerView videoPlayerView;
