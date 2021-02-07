@@ -6,10 +6,14 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -29,20 +33,19 @@ public class TestImageLoader implements IZoomMediaLoader {
     @Override
     public void displayImage(@NonNull Fragment context, @NonNull String path, ImageView imageView, @NonNull final MySimpleTarget simpleTarget) {
         Glide.with(context).load(path)
-                .asBitmap()
                 .error(R.drawable.ic_default_image)
               //  .placeholder(android.R.color.darker_gray)
                 .fitCenter()
                 .centerCrop()
-                .listener(new RequestListener<String, Bitmap>() {
+                .listener(new RequestListener<Drawable>() {
                     @Override
-                    public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         simpleTarget.onLoadFailed(null);
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         simpleTarget.onResourceReady();
                         return false;
                     }
@@ -53,21 +56,18 @@ public class TestImageLoader implements IZoomMediaLoader {
     @Override
     public void displayGifImage(@NonNull Fragment context, @NonNull String path, ImageView imageView, @NonNull final MySimpleTarget simpleTarget) {
         Glide.with(context).load(path)
-               .asGif()
-                //可以解决gif比较几种时 ，加载过慢  //DiskCacheStrategy.NONE
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .error(R.drawable.ic_default_image)
                 .dontAnimate() //去掉显示动画
-                .listener(new RequestListener<String, GifDrawable>() {
+                .listener(new RequestListener<Drawable>() {
                     @Override
-                    public boolean onException(Exception e, String model, Target<GifDrawable> target, boolean isFirstResource) {
-                        simpleTarget.onResourceReady();
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        simpleTarget.onLoadFailed(null);
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(GifDrawable resource, String model, Target<GifDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        simpleTarget.onLoadFailed(null);
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        simpleTarget.onResourceReady();
                         return false;
                     }
                 })
@@ -76,11 +76,10 @@ public class TestImageLoader implements IZoomMediaLoader {
     @Override
     public void onStop(@NonNull Fragment context) {
           Glide.with(context).onStop();
-
     }
 
     @Override
     public void clearMemory(@NonNull Context c) {
-             Glide.get(c).clearMemory();
+            Glide.get(c).clearMemory();
     }
 }

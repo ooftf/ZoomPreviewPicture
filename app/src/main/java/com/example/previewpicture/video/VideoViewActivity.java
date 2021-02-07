@@ -37,8 +37,8 @@ public class VideoViewActivity extends AppCompatActivity {
         for (int i = 0; i < 12; i++) {
             mThumbViewInfoList.add(new UserViewInfo(urls.get(i)));
         }
-        mThumbViewInfoList.add(new UserViewInfo("http://img.soogif.com/GB8rgsM1m7FYYRA8q7Xyy6FxtqLBEphz.gif"));
-        mThumbViewInfoList.add(new UserViewInfo("http://pic.qiantucdn.com/58pic/11/90/83/96a58PICrRx.jpg"));
+        mThumbViewInfoList.add(new UserViewInfo("https://img.soogif.com/GB8rgsM1m7FYYRA8q7Xyy6FxtqLBEphz.gif"));
+        mThumbViewInfoList.add(new UserViewInfo("https://pic.qiantucdn.com/58pic/11/90/83/96a58PICrRx.jpg"));
         mThumbViewInfoList.addAll(ImageUrlConfig.getVideos());
         mThumbViewInfoList.addAll(ImageUrlConfig.getGifUrls());
         mRecyclerView = findViewById(R.id.recycler_view);

@@ -2,8 +2,11 @@ package com.example.previewpicture.app;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.Registry;
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
@@ -21,19 +24,12 @@ public class MyGlideModule implements GlideModule {
 
     @Override
     public void applyOptions(final Context context, GlideBuilder builder) {
-        MemorySizeCalculator calculator = new MemorySizeCalculator(context);
-        int defaultMemoryCacheSize = calculator.getMemoryCacheSize();
-        int defaultBitmapPoolSize = calculator.getBitmapPoolSize();
-        int customMemoryCacheSize = (int) (1.2 * defaultMemoryCacheSize);
-        int customBitmapPoolSize = (int) (1.2 * defaultBitmapPoolSize);
-        builder.setMemoryCache(new LruResourceCache(customMemoryCacheSize));
-         builder.setBitmapPool(new LruBitmapPool(customBitmapPoolSize));
-        builder.setDiskCache(new InternalCacheDiskCacheFactory(context, cacheSize100MegaBytes));
-        ViewTarget.setTagId(R.id.glide_tag_id);
+      
     }
 
+
     @Override
-    public void registerComponents(Context context, Glide glide) {
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
 
     }
 }

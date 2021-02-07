@@ -69,7 +69,7 @@ public class RecycleViewActivity extends AppCompatActivity {
                 ImageView thumbView = (ImageView) itemView.findViewById(R.id.iv);
                 thumbView.getGlobalVisibleRect(bounds);
             }
-            mThumbViewInfoList.get(i).setBounds(bounds);
+            //mThumbViewInfoList.get(i).setBounds(bounds);
         }
     }
 }

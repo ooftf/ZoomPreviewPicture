@@ -14,11 +14,12 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
-import com.github.chrisbanes.photoview2.PhotoView;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.previewlibrary.R;
 import com.previewlibrary.view.ImageUtils;
 
@@ -134,12 +135,24 @@ public class SmoothImageView extends PhotoView {
     private boolean isDownPhoto = false;
     private int alpha = 0;
     private static final int MIN_TRANS_DEST = 5;
+    private int downPoint = 0;
+
+    /*
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            gestureDetector.onTouchEvent(event);
+            return super.onTouchEvent(event);
+        }
+    */
+    long touchTime = 0;
+    double velocityY = 0;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         int action = event.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                Log.e("action", "ACTION_DOWN");
                 downX = (int) event.getX();
                 downY = (int) event.getY();
                 if (markTransform == null) {
@@ -156,7 +169,17 @@ public class SmoothImageView extends PhotoView {
                 isMoved = false;
                 break;
             case MotionEvent.ACTION_MOVE:
+                //双指变一指 重置之down位置
+                boolean changeTo1 = downPoint > 1 && event.getPointerCount() == 1;
+                if (changeTo1) {
+                    downX = (int) event.getX();
+                    downY = (int) event.getY();
+                }
+                downPoint = event.getPointerCount();
+
+                Log.e("action", "ACTION_MOVE" + event.getY());
                 if (!isDownPhoto && event.getPointerCount() == 1) {
+                    touchTime = System.currentTimeMillis();
                     return super.dispatchTouchEvent(event);
                 }
                 int mx = (int) event.getX();
@@ -168,14 +191,22 @@ public class SmoothImageView extends PhotoView {
                 // 水平方向移动不予处理
                 boolean s = !isMoved && (Math.abs(offsetX) > Math.abs(offsetY) || Math.abs(offsetY) < MIN_TRANS_DEST);
                 if (s) {
+                    Log.e("action", "ACTION_MOVE___super");
+                    touchTime = System.currentTimeMillis();
                     return super.dispatchTouchEvent(event);
                 } else {
                     if (isDrag) {
+                        Log.e("action", "ACTION_MOVE___super");
+                        touchTime = System.currentTimeMillis();
                         return super.dispatchTouchEvent(event);
                     }
+                    Log.e("action", "ACTION_MOVE___smooth");
                     // 一指滑动时，才对图片进行移动缩放处理
                     if (event.getPointerCount() == 1) {
+                        Log.e("action", "ACTION_MOVE___smooth__deal" + offsetY);
                         mStatus = Status.STATE_MOVE;
+                        Log.e("velocityY", (event.getY() - downY) + ":::::" + (System.currentTimeMillis() - touchTime));
+                        velocityY = (double) offsetY / (System.currentTimeMillis() - touchTime);
                         offsetLeftAndRight(offsetX);
                         offsetTopAndBottom(offsetY);
                         float scale = moveScale();
@@ -191,25 +222,27 @@ public class SmoothImageView extends PhotoView {
                         if (alphaChangeListener != null) {
                             alphaChangeListener.onAlphaChange(alpha);
                         }
+                        touchTime = System.currentTimeMillis();
                         return true;
-                    }
-                    // 多指滑动，直接屏蔽事件
-                    else {
+                    } else {
+                        // 多指滑动，直接屏蔽事件
                         break;
                     }
                 }
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                downPoint = 0;
+
                 if (isMoved) {
-                    if (moveScale() <= MAX_TRANS_SCALE) {
-                        moveToOldPosition();
+
+                    Log.e("velocityY", "velocityY::" + velocityY);
+
+                    if (moveScale() >= MAX_TRANS_SCALE || velocityY > 2) {
+                        triggerExit();
                     } else {
-                        changeTransform();
-                        setTag(R.id.item_image_key, true);
-                        if (transformOutListener != null) {
-                            transformOutListener.onTransformOut();
-                        }
+                        moveToOldPosition();
                     }
+                    touchTime = System.currentTimeMillis();
                     return true;
                 }
                 break;
@@ -217,7 +250,16 @@ public class SmoothImageView extends PhotoView {
 
             }
         }
+        touchTime = System.currentTimeMillis();
         return super.dispatchTouchEvent(event);
+    }
+
+    private void triggerExit() {
+        changeTransform();
+        setTag(R.id.item_image_key, true);
+        if (transformOutListener != null) {
+            transformOutListener.onTransformOut();
+        }
     }
 
     /**
@@ -312,8 +354,8 @@ public class SmoothImageView extends PhotoView {
             Transform tempTransform = markTransform.clone();
             tempTransform.top = markTransform.top + getTop();
             tempTransform.left = markTransform.left + getLeft();
-            tempTransform.alpha = alpha;
             tempTransform.scale = markTransform.scale - (1 - getScaleX()) * markTransform.scale;
+            tempTransform.alpha = alpha;
             animTransform = tempTransform.clone();
             endTransform = tempTransform.clone();
         }
