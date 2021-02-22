@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.View;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.previewlibrary.enitity.ThumbViewInfo;
 import com.previewlibrary.loader.VideoClickListener;
@@ -60,18 +63,20 @@ public final class GPreviewBuilder {
         intent.setClass(mContext, className);
         return this;
     }
+
     /****
      *自定义预览activity 类名  方便自定义数据。
      * @param className 继承GPreviewActivity
      * @param bundle 需携带的参数
      *@return GPreviewBuilder
      * **/
-    public GPreviewBuilder to(@NonNull Class className,@NonNull Bundle bundle) {
+    public GPreviewBuilder to(@NonNull Class className, @NonNull Bundle bundle) {
         this.className = className;
         intent.setClass(mContext, className);
         intent.putExtras(bundle);
         return this;
     }
+
     /***
      * 设置数据源
      * @param imgUrls 数据
@@ -82,6 +87,25 @@ public final class GPreviewBuilder {
         intent.putParcelableArrayListExtra("imagePaths", new ArrayList<Parcelable>(imgUrls));
         return this;
     }
+
+
+    /***
+     * 设置数据源
+     * @param imgUrls 数据
+     *@param   <T>    你的实体类类型
+     * @return GPreviewBuilder
+     * **/
+    public <T extends ThumbViewInfo> GPreviewBuilder setData(@NonNull List<T> imgUrls, LinearLayoutManager layoutManager, @IdRes int id, int headerCount) {
+        int childIndex = layoutManager.findFirstVisibleItemPosition();
+        for (; childIndex < imgUrls.size() + headerCount; childIndex++) {
+            View itemView = layoutManager.findViewByPosition(childIndex);
+            if (itemView != null) {
+                imgUrls.get(childIndex - headerCount).setBoundsView(itemView.findViewById(id));
+            }
+        }
+        return setData(imgUrls);
+    }
+
 
     /***
      * 设置单个数据源
@@ -177,6 +201,7 @@ public final class GPreviewBuilder {
         intent.putExtra("duration", setDuration);
         return this;
     }
+
     /***
      *  设置是否全屏
      * @param isFullscreen  单位毫秒
@@ -186,6 +211,7 @@ public final class GPreviewBuilder {
         intent.putExtra("isFullscreen", isFullscreen);
         return this;
     }
+
     /***
      *  设置是怕你点击播放回调
      * @return GPreviewBuilder
@@ -204,7 +230,7 @@ public final class GPreviewBuilder {
         } else {
             intent.setClass(mContext, className);
         }
-        BasePhotoFragment.listener=videoClickListener;
+        BasePhotoFragment.listener = videoClickListener;
         mContext.startActivity(intent);
         mContext.overridePendingTransition(0, 0);
         intent = null;

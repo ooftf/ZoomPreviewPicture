@@ -1,11 +1,20 @@
+
+
 # ZoomPreviewPicture
+
+相较于原项目更改内容如下
+* 不再采用实现IThumbViewInfo接口的方式，而是采用build的时候，新建ThumbViewInfo的方式，使数据源和ThumbViewInfo隔离；
+* 优化双指改单指时图片跳动问题；
+* 采用官方PhotoView
+* 添加fling 返回
+* 封装一些更方便的api
 
 本项目受Google官方demo Zooming a View 启发，实现了点击小图放大至全屏预览，退出全屏恢复至原来位置这两个过程的动画过渡。
 常见应用场景如微信朋友圈照片九宫格和微信聊天图片,视频,gif预览，某些手机系统相册等viewpager图片查看 缩放 拖拽下拉缩小退出（效果同微信图片浏览）
 
-[![Download](https://api.bintray.com/packages/ycjiang/yangjiang/ImagePreview/images/download.svg) ](https://bintray.com/ycjiang/yangjiang/ImagePreview/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/ooftf/maven/ImagePreview/images/download.svg) ](https://bintray.com/ooftf/maven/ImagePreview/_latestVersion)
 
- ### 特点
+### 特点
    * 1.支持自定义图片加载框架。
    * 2.支持重写activity,完成切换切换效果。
    * 3.图片查看 缩放 拖拽下拉缩小退出。
@@ -22,7 +31,7 @@
 通过Gradle抓取:
  
 ```grade
-  compile 'com.ycjiang:ImagePreview:2.2.8'
+  compile 'com.ooftf:ImagePreview:2.2.9'
 ```
  
 ###  1.本项目类库依赖第三库
