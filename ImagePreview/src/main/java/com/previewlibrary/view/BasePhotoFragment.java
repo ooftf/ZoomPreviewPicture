@@ -3,15 +3,15 @@ package com.previewlibrary.view;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.annotation.CallSuper;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.core.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
 
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.OnViewTapListener;
@@ -282,13 +282,18 @@ public class BasePhotoFragment extends Fragment {
     }
 
     public void transformOut(SmoothImageView.onTransformListener listener) {
+        if (imageView == null) {
+            return;
+        }
         imageView.transformOut(listener);
     }
 
 
     public void changeBg(int color) {
         ViewCompat.animate(btnVideo).alpha(0).setDuration(SmoothImageView.getDuration()).start();
-        rootView.setBackgroundColor(color);
+        if (rootView != null) {
+            rootView.setBackgroundColor(color);
+        }
     }
 
     public ThumbViewInfo getBeanViewInfo() {
