@@ -290,7 +290,9 @@ public class BasePhotoFragment extends Fragment {
 
 
     public void changeBg(int color) {
-        ViewCompat.animate(btnVideo).alpha(0).setDuration(SmoothImageView.getDuration()).start();
+        if(btnVideo!=null){
+            ViewCompat.animate(btnVideo).alpha(0).setDuration(SmoothImageView.getDuration()).start();
+        }
         if (rootView != null) {
             rootView.setBackgroundColor(color);
         }
