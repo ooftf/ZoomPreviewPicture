@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ZoomPreviewPicture.iml" filepath="$PROJECT_DIR$/.idea/modules/ZoomPreviewPicture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ImagePreview/ZoomPreviewPicture.ImagePreview.iml" filepath="$PROJECT_DIR$/.idea/modules/ImagePreview/ZoomPreviewPicture.ImagePreview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ZoomPreviewPicture.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ZoomPreviewPicture.app.iml" />
+    </modules>
+  </component>
+</project>
