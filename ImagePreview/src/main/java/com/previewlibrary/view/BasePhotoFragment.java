@@ -281,13 +281,19 @@ public class BasePhotoFragment extends Fragment {
     }
 
     public void transformOut(SmoothImageView.onTransformListener listener) {
-        imageView.transformOut(listener);
+        if(imageView!=null){
+            imageView.transformOut(listener);
+        }
     }
 
 
     public void changeBg(int color) {
-        ViewCompat.animate(btnVideo).alpha(0).setDuration(SmoothImageView.getDuration()).start();
-        rootView.setBackgroundColor(color);
+        if(btnVideo!=null){
+            ViewCompat.animate(btnVideo).alpha(0).setDuration(SmoothImageView.getDuration()).start();
+        }
+        if(rootView!=null){
+            rootView.setBackgroundColor(color);
+        }
     }
 
     public ThumbViewInfo getBeanViewInfo() {

@@ -43,5 +43,5 @@ dependencies {
 apply plugin: 'ooftf-maven'
 publish {
     artifactId = 'image-preview'
-    version = '2.2.9'
+    version = '2.3.0'
 }
