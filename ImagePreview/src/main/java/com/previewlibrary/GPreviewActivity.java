@@ -3,15 +3,16 @@ package com.previewlibrary;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.TextView;
+
 import androidx.annotation.CallSuper;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.TextView;
 
 import com.previewlibrary.enitity.ThumbViewInfo;
 import com.previewlibrary.view.BasePhotoFragment;
@@ -89,11 +90,11 @@ public class GPreviewActivity extends FragmentActivity {
         type = (GPreviewBuilder.IndicatorType) getIntent().getSerializableExtra("type");
         isShow = getIntent().getBooleanExtra("isShow", true);
         int duration = getIntent().getIntExtra("duration", 300);
-         boolean isFullscreen=getIntent().getBooleanExtra("isFullscreen",false);
+        boolean isFullscreen = getIntent().getBooleanExtra("isFullscreen", false);
         SmoothImageView.setFullscreen(isFullscreen);
-         if (isFullscreen){
-             setTheme(android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
-         }
+        if (isFullscreen) {
+            setTheme(android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        }
         try {
             SmoothImageView.setDuration(duration);
             Class<? extends BasePhotoFragment> sss;
@@ -118,11 +119,11 @@ public class GPreviewActivity extends FragmentActivity {
             for (int i = 0; i < size; i++) {
                 fragments.add(BasePhotoFragment.
                         getInstance(className, imgUrls.get(i),
-                        currentIndex == i,
+                                currentIndex == i,
                                 getIntent().getBooleanExtra("isSingleFling", false),
                                 getIntent().getBooleanExtra("isDrag", false),
                                 getIntent().getFloatExtra("sensitivity", 0.5f))
-                               );
+                );
             }
         } else {
             finish();
@@ -180,8 +181,10 @@ public class GPreviewActivity extends FragmentActivity {
             @Override
             public void onGlobalLayout() {
                 viewPager.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                BasePhotoFragment fragment = fragments.get(currentIndex);
-                fragment.transformIn();
+                if (0 <= currentIndex && currentIndex < fragments.size()) {
+                    BasePhotoFragment fragment = fragments.get(currentIndex);
+                    fragment.transformIn();
+                }
             }
         });
 
@@ -218,7 +221,7 @@ public class GPreviewActivity extends FragmentActivity {
 
     @Override
     public void finish() {
-        BasePhotoFragment.listener=null;
+        BasePhotoFragment.listener = null;
         super.finish();
     }
 
